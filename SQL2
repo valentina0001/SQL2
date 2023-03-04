@@ -1,0 +1,101 @@
+ SQL programiranje i administracija
+Assignment –
+Sistemske baze, rad sa bazama i tabelama
+
+
+Zadatak
+Kreirati bazu podataka koja ima:
+•	Primarni fajl baze DB_ASSIG1 (veličina 1GB, povećanje 100MB)
+•	Sekundardni fajl baze DB_ASSEC1 (veličina 500MB, povećanje 50MB)
+•	Fajl grupa FG_ASSIG1 i u njoj sekundardni fajl baze DB_ASSEC2
+•	Transakcioni log fajl DB_log1
+
+Nakon kreiranja baze, u bazi napraviti tabelu sa sledećom strukturom:
+•	Phone_ID, tip SMALLINT ,
+•	Phone_Name, tip VARCHAR(15) ,
+•	Phone_Type, tip VARCHAR (10)
+•	Description, tip VARCHAR(25) ,
+•	Price, tip SMALLMONEY ,
+•	Manufacturer_ID, tip integer
+
+Posle kreiranja baze, naknadno dodati novu kolonu Design_ID, tipa integer i koja neće imati NULL vrednost. Napraviti screen shot kreirane baze i tabele.
+
+
+
+
+Kreiranje baze podataka: 
+
+USE [master];
+ 
+GO
+
+CREATE DATABASE [DB_ASSIG1]
+ 
+CONTAINMENT = NONE
+ 
+ON PRIMARY
+ 
+(NAME = N'DB_ASSIG1', FILENAME = N'C:\SQL Install\DB_ASSIG1.mdf', SIZE
+ 
+= 1000MB, FILEGROWTH = 100MB),
+ 
+(NAME = N'DB_ASSEC1', FILENAME = N'C:\SQL Install\DB_ASSEC1.ndf', SIZE
+ 
+= 1000MB, FILEGROWTH = 100MB),
+ 
+FILEGROUP [FG_ASSIG1]
+ 
+(NAME = N'DB_ASSEC2', FILENAME = N'C:\SQL Install\DB_ASSEC2.ndf', SIZE
+ 
+= 500MB, FILEGROWTH = 50MB)
+ 
+LOG ON
+ 
+(NAME = N'DB_log1', FILENAME = N'C:\SQL Install\DB_log1df', SIZE =
+ 
+500MB, FILEGROWTH = 50MB)
+ 
+GO
+
+Tabela:
+
+USE [DB_ASSIG1];
+ 
+GO
+ 
+CREATE TABLE Phone_Info
+ 
+  (
+ 
+Phone_ID SMALLINT ,
+ 
+Phone_Name VARCHAR(15) ,
+
+Phone_Type VARCHAR(10) ,
+
+Description VARCHAR(25) ,
+ 
+Price [SMALLMONEY] ,
+ 
+Manufacturer [int]
+ 
+  )
+ 
+ON FG_ASSIG1;
+ 
+GO
+
+Nova kolona Design_ID, tipa integer koja nema NULL vrednost
+
+
+USE [DB_ASSIG1];
+ 
+GO
+ 
+ALTER TABLE [Phone_Info]
+ 
+ADD [Design_ID] INT NOT NULL;
+ 
+GO
+
+
